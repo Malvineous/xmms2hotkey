@@ -1,0 +1,1 @@
+ - Cope with evdev devices being hotplugged at runtime

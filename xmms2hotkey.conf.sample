@@ -1,0 +1,126 @@
+#
+# xmms2hotkey.conf
+#
+# Hotkey configuration for controlling XMMS2.
+#
+
+[main]
+
+# Default seeks back/forward five seconds (5000ms)
+#seek_step=5000
+
+# Default turns volume up/down by 5%
+#volume_step=5
+
+# Don't show evdev keycodes by default.  Set to true to see keycodes of all
+# keys being pressed.  Only works for evdev.  For X11, run the "xev" program.
+#show_keycodes=false
+
+#
+# Where to listen for hotkeys.
+#
+[listen]
+
+# Which X11 displays to grab keypresses from, if X11 support has been compiled
+# in.  "default" means use the DISPLAY environment variable (if any) upon
+# launch.  Can be listed multiple times for additional local or remote X11
+# screens/displays.
+x11=default
+
+# Multihead example
+#x11=:0.0
+#x11=:0.1
+
+# Multisystem example
+#x11=default
+#x11=remote.example.com:0
+
+# List of evdev devices to monitor if evdev support has been compiled in.
+# Device names must start with "evdev" and be unique.  Multiple evdev
+# devices can be specified (e.g. keyboard and mouse) by using different
+# identifiers (e.g. evdev0 and evdev1.)  Each of these can have independent
+# key mappings (because it's unlikely your keyboard and mouse will use the
+# same codes!)
+#
+# Run "ls /dev/input/by-id/*-event*" to see a list of available devices.
+# Devices can also be specified as /dev/input/eventX, however this runs
+# the risk of grabbing the wrong device if the numbering changes, e.g.
+# by hotplugging a new input device.
+#
+#evdev0=/dev/input/by-id/usb-Logitech_USB_Receiver-event-mouse
+
+
+#
+# Key definitions.
+#
+
+# Each section is "key.something" where "something" is the name of the
+# key you wish to use (just make it up.)  Don't use a full stop or square
+# brackets in the key name.  Key names are used below in the [events]
+# section to assign a key to an action.
+#
+# The values in this section are "x11kb" for an X-Windows key code, "x11m"
+# for an X-Windows mouse button code, or "evdevX" as given in the [listen]
+# section above.
+#
+# The actual keycodes can be obtained from the "xev" program (look at
+# "keycode" for x11kb or "button" for x11m.)  For evdev devices, set
+# show_codes=true in [main] and run from a console to print keycodes to
+# the terminal (make sure you have set up evdevX devices in [listen] first!)
+#
+# Example:
+#
+# [key.f10]
+# x11kb=76     Keycode 76 is mapped to key.f10
+# x11m=1       Left-mouse button is also mapped to key.f10
+# evdev0=68    This evdev key will also be treated as key.f10
+#
+# Modifiers (shift, control, etc.) can be optionally specified in front of the
+# keycode, separated by a comma.  If omitted, then modifiers will have no
+# effect.  This means that "x11kb=75" will match F10, Shift+F10, Ctrl+F10,
+# etc. whereas "x11kb=0,75" will ONLY match F10 (no modifiers pressed), and
+# Shift+F10, etc. will be ignored.
+#
+# [key.shift_f9]
+# x11kb=1,75   Only grab keycode 75 (F9) with modifier 1 (Shift)
+#
+# If you get BadAccess errors at startup, it's because something else has
+# already grabbed the keys you're trying to use.
+#
+[key.wheelup]
+x11m=0,4
+evdev0=4113
+
+[key.wheeldown]
+x11m=0,5
+evdev0=4112
+
+[key.play]
+x11kb=162
+
+
+#
+# Event definitions.  These must follow the keys above.  Events can be
+# listed multiple times to assign different hotkeys to the same action.
+#
+# Examples:
+#
+#  play=f10     Use the [key.f10] codes above to start playback
+#  play=f9+f10  While [key.f9] is held down, play if [key.f10] is pressed
+#
+# Available events:
+#
+#  play - start playback, no effect if already playing
+#  playpause - start playback, pause/resume if already playing
+#  stop - bring misery to your world
+#  skipprev - play previous song in playlist
+#  skipnext - play next song
+#  seekfwd - skip forward five seconds (time can be changed in [main])
+#  seekback - skip back
+#  volup - increase mixer 5% (amount can be changed in [main])
+#  voldown - decrease mixer
+#
+[events]
+playpause=play
+skipprev=wheelup
+skipnext=wheeldown

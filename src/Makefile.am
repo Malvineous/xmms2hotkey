@@ -1,0 +1,6 @@
+bin_PROGRAMS = xmms2hotkey
+
+xmms2hotkey_SOURCES = xmms2hotkey.cpp
+
+AM_CPPFLAGS = $(BOOST_CPPFLAGS) $(xmms2client_CFLAGS)
+AM_LDFLAGS = $(BOOST_SYSTEM_LIBS) $(BOOST_PROGRAM_OPTIONS_LIBS) $(BOOST_THREAD_LIBS) $(X_LIBS) $(xmms2client_LIBS)

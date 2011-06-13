@@ -1,0 +1,9 @@
+Version 0.3 (2011-06-13)
+	* Add GNU autotools build environment
+	* Move to git repo
+
+Version 0.2 (2009-08-16)
+	* Fixed support for multiple X11 displays (was only accessing the last one in the config file)
+
+Version 0.1 (2009-06-07)
+	* Initial release

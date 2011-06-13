@@ -1,0 +1,68 @@
+---------------------------------------------------------------
+ xmms2hotkey - version 0.3 (2011-06-13)
+ Written by Adam Nielsen <malvineous@shikadi.net>
+---------------------------------------------------------------
+
+// What is it?
+////////////////
+
+This is a client for the XMMS2 media player.  It has no user interface, rather
+it monitors certain keys and buttons and tells XMMS2 to perform a specific
+action when those keys are pressed.
+
+All configuration is done through the config file.  By default this is
+~/.config/xmms2/clients/xmms2hotkeys.conf.  For new installations, copy
+xmms2hotkeys.conf.sample there and modify it.  Details are included in
+the sample file's comments.
+
+// Features
+/////////////
+
+ * Supports X11 keys, like most other hotkey programs.  Also supports mouse
+   buttons as hotkeys.
+
+ * Supports evdev keys, unlike most other programs.  This will allow you to
+   use hotkeys in the console, without X-Windows running.  This will work with
+   any evdev supported device (mouse, keyboard, joystick, etc.) and will still
+   work with X11 running.
+
+ * Supports multikey combinations.  You can assign a single trigger hotkey,
+   so that other keys only work while the trigger key is being pressed.  For
+   example, if you set your trigger key to F10 and the up/down arrows to skip
+   to the prev/next track, you will be able to use the arrows normally, but
+   press F10+Down to skip to the next track.
+
+   This is perhaps most useful if you have a spare mouse button, as you can
+   hold that down and use the rest of the mouse (wheel etc.) for manipulating
+   XMMS2, without interfering with normal use of the mouse.
+
+   The main limitation with this is that all hotkeys must be on the same
+   device.  (So you can't press a key on the keyboard to switch the mouse
+   buttons over to XMMS2 mode.)
+
+// Notes
+//////////
+
+ * If autorepeat is bothering you (e.g. holding down the play/pause key causes
+   rapid pause/resume actions) you can disable the autorepeat for individual
+   keys if you're using X11 hotkeys.  (This applies to X11 in general and is
+   not specific to xmms2hotkeys.)  You will probably want to leave autorepeat
+   enabled for those hotkeys you might hold down though, such as the volume
+   controls.  Run "xset -r 123 -r 456" to disable repeat for keycodes 123 and
+   346.  See the manpage for xset for further details.  xmodmap might also be
+   useful to set up other modifiers in addition to shift, control, etc.)
+
+ * Using evdev hotkeys works fine under X11 (and means you can load
+   xmms2hotkeys at system startup - music while you log in) however any
+   keys being used for XMMS2 actions won't be hidden from X11.  This means
+   any X11 apps will still see the keys you're pressing (so if you use the
+   'a' key to start playback, pressing 'a' will not only start playback, but
+   make the letter 'a' appear in whatever X11 program you're using.)
+   If this is a problem, either use xmodmap to hide the key from X11 or use
+   the X11 bindings instead.
+
+// License
+////////////
+
+xmms2hotkeys is released under the GPL.  See the file COPYING for details.
+
