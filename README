@@ -1,5 +1,5 @@
 ---------------------------------------------------------------
- xmms2hotkey - version 0.3 (2011-06-13)
+ xmms2hotkey - version 0.4 (2011-11-23)
  Written by Adam Nielsen <malvineous@shikadi.net>
 ---------------------------------------------------------------
 
@@ -36,8 +36,8 @@ the sample file's comments.
    hold that down and use the rest of the mouse (wheel etc.) for manipulating
    XMMS2, without interfering with normal use of the mouse.
 
-   The main limitation with this is that all hotkeys must be on the same
-   device.  (So you can't press a key on the keyboard to switch the mouse
+   The main limitation with this is that all multikey hotkeys must be on the
+   same device.  (So you can't press a key on the keyboard to switch the mouse
    buttons over to XMMS2 mode.)
 
 // Notes

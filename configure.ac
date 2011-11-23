@@ -2,8 +2,8 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.63])
-AC_INIT([xmms2hotkey], [0.3], [malvineous@shikadi.net])
-AM_INIT_AUTOMAKE([xmms2hotkey], [0.3])
+AC_INIT([xmms2hotkey], [0.4], [malvineous@shikadi.net])
+AM_INIT_AUTOMAKE([xmms2hotkey], [0.4])
 AC_CONFIG_SRCDIR([src/xmms2hotkey.cpp])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
