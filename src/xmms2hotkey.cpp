@@ -331,16 +331,43 @@ struct bindEvdev {
 		struct input_event events[NUM_EVENTS];
 		int iState = 0;
 		for (;;) {
+			if (this->devHandle == -1) {
+				// Device was closed/lost, but not yet reopened
+				this->devHandle = open(this->strDevName.c_str(), O_RDONLY);
+				if (this->devHandle < 0) {
+					// Device doesn't exist yet
+					sleep(1);
+					continue;
+				} else {
+					std::cerr << PROGNAME "Successfully reopened device "
+						<< this->strDevName << std::endl;
+				}
+			}
+
 			size_t iNumBytes = read(this->devHandle, events, sizeof(struct input_event) * NUM_EVENTS);
 
-			// If we've been interrupted, exit the thread
-			if ((iNumBytes == (size_t)-1) && (errno == EINTR)) break;
+			if (iNumBytes == (size_t)-1) {
+				// If we've been interrupted, exit the thread
+				if (errno == EINTR) break;
 
-			if (iNumBytes < sizeof(struct input_event)) {
-				std::cerr << PROGNAME "Short read from evdev device " << this->strDevName
-					<< " (only an incomplete event was returned): " << strerror(errno)
-					<< std::endl;
-				return;
+				if (errno == ENODEV) {
+					// Device has been removed
+					std::cerr << PROGNAME "Lost device " << this->strDevName << std::endl;
+					close(this->devHandle);
+					this->devHandle = -1;
+					continue;
+				}
+
+				std::cerr << PROGNAME "Error reading from " << this->strDevName
+					<< ": " << strerror(errno)
+					<< " - not monitoring this device any more." << std::endl;
+				break;
+
+			} else if (iNumBytes < sizeof(struct input_event)) {
+				std::cerr << PROGNAME "Short read from evdev device "
+					<< this->strDevName
+					<< " (only an incomplete event was returned, ignoring)" << std::endl;
+				continue;
 			}
 			for (size_t i = 0; i < iNumBytes / sizeof(struct input_event); i++) {
 
