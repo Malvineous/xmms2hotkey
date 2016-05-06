@@ -258,7 +258,7 @@ struct bindX11 {
 	{
 		this->d = XOpenDisplay(cDisplay);
 		if (!this->d) throw EBindFailed(cDisplay, "Unable to open X11 display.");
-		std::cout << PROGNAME "Opened X11 display " << cDisplay << std::endl;
+		std::cout << PROGNAME "Opened X11 display " << (cDisplay ? cDisplay : "<default>") << std::endl;
 	}
 
 	// Thread entrypoint
