@@ -433,7 +433,7 @@ struct bindEvdev {
 #endif // USE_EVDEV
 
 // Callback function used when loading the list of hotkeys from the config file
-void loadHotkey(int hkiType, int iKey, int iModifier, int iSubkey, boost::function<void()> fnAction)
+void loadHotkey(int hkiType, int iKey, int iModifier, int hkiTypeSub, int iSubkey, boost::function<void()> fnAction)
 {
 	VC_HOTKEYS::iterator itHKmain = searchHotkeyVector(::vcHotkeys, hkiType, iKey, iModifier);
 	if (itHKmain != ::vcHotkeys.end()) {
@@ -441,7 +441,7 @@ void loadHotkey(int hkiType, int iKey, int iModifier, int iSubkey, boost::functi
 		if (iSubkey != 0) {
 			// New subaction to add
 			HOTKEY hk;
-			hk.hkiType = hkiType;
+			hk.hkiType = hkiTypeSub;
 			hk.iKey = iSubkey;
 			hk.iModifier = iModifier;
 			hk.fnAction = fnAction;
@@ -471,7 +471,7 @@ void loadHotkey(int hkiType, int iKey, int iModifier, int iSubkey, boost::functi
 			hk.iModifier = iModifier;
 			hk.fnAction = NULL;
 				HOTKEY hkSub;
-				hkSub.hkiType = hkiType;
+				hkSub.hkiType = hkiTypeSub;
 				hkSub.iKey = iSubkey;
 				hkSub.iModifier = iModifier;
 				hkSub.fnAction = fnAction;
@@ -678,15 +678,10 @@ int main(void)//int iArgC, char *cArgV[])
 					}*/
 					if (!strSubKey.empty()) {
 						for (VC_HOTKEYS::iterator s = vcGrabSubKeys.begin(); s != vcGrabSubKeys.end(); s++) {
-							if (s->hkiType == j->hkiType) {
-								/*std::cout << "load " << j->hkiType << " key " << strMainKey << "-"
-									<< j->iKey << "." << j->iModifier
-									<< " sub " << strSubKey << "-" << s->iKey << "\n";*/
-								loadHotkey(j->hkiType, j->iKey, j->iModifier, s->iKey, fnAction);
-							}
+							loadHotkey(j->hkiType, j->iKey, j->iModifier, s->hkiType, s->iKey, fnAction);
 						}
 					} else {
-						loadHotkey(j->hkiType, j->iKey, j->iModifier, 0, fnAction);
+						loadHotkey(j->hkiType, j->iKey, j->iModifier, 0, 0, fnAction);
 					}
 				}
 			}
