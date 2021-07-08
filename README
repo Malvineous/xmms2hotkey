@@ -11,8 +11,8 @@ it monitors certain keys and buttons and tells XMMS2 to perform a specific
 action when those keys are pressed.
 
 All configuration is done through the config file.  By default this is
-~/.config/xmms2/clients/xmms2hotkeys.conf.  For new installations, copy
-xmms2hotkeys.conf.sample there and modify it.  Details are included in
+~/.config/xmms2/clients/xmms2hotkey.conf.  For new installations, copy
+xmms2hotkey.conf.sample there and modify it.  Details are included in
 the sample file's comments.
 
 // Features
